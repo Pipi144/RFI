@@ -785,3 +785,10 @@ export const StyledRFIListScroller = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
+export const StyledRFIGridItem = styled.div`
+  width: calc(100% - 16px);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  background-color: pink;
+`;

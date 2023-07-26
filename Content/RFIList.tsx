@@ -25,6 +25,7 @@ import DoxleIconButton from "../../DoxleDesignPattern/DoxleButtons/DoxleIconButt
 import TableRowsSharpIcon from "@mui/icons-material/TableRowsSharp";
 import RFIListTableView from "./RFIListTableView";
 import DoxleGridLayout from "../../DoxleDesignPattern/DoxleLayout/DoxleGridLayout/DoxleGridLayout";
+import RFIGridItem from "./RFIGridItem";
 type Props = {};
 
 const RFIList = ({}: Props) => {
@@ -124,8 +125,8 @@ const RFIList = ({}: Props) => {
                   buttonSize={30}
                   bgColor={doxleThemeColor.primaryContainerColor}
                   buttonWrapperStyle={{
-                    marginRight: 8,
                     border: `1px solid ${doxleThemeColor.doxleColor}`,
+                    marginRight: 4,
                   }}
                   onClick={() => handleSelectRFIView("grid")}
                 />
@@ -148,7 +149,10 @@ const RFIList = ({}: Props) => {
                   handleClickRFIItem={handleClickRFIItem}
                 />
               ) : (
-                <DoxleGridLayout data={rfiList} />
+                <DoxleGridLayout
+                  data={rfiList}
+                  renderItem={(item, index) => <RFIGridItem rfiItem={item} />}
+                />
               )}
 
               <AnimatePresence>
