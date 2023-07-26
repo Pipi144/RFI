@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import { Contact } from "../../Models/addressBook";
-import { BaseAPIProps } from "../../Models/baseAPIProps";
 import { User } from "../../Models/user";
 import { FilterGetRFIList } from "../QueryAPI/rfiQueryAPI";
-import UserQueryAPI from "../../Services/QueryHooks/userQueryAPI";
-import { useMemo } from "react";
 
 interface RFIStore {
   contactList: Contact[];

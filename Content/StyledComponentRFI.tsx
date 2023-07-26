@@ -472,10 +472,8 @@ export const StyledRFIItemDescriptionSection = styled.div<{
   letter-spacing: 0.05em;
   text-transform: capitalize;
   color: ${(p) => p.$themeColor.errorColor};
-  max-height: 30px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  // max-height: 30px;
+  word-break: break-word;
   margin: 4px 0px;
 `;
 export const StyledRFITimestampAndCommentSection = styled.div`
@@ -746,15 +744,6 @@ export const StyledRFISubTitleText = styled(Typography)<{
   }
 `;
 
-export const StyledRFIWacherSectionContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 14px 0px;
-  z-index: 4;
-`;
-
 export const StyledRFIDetailLabelText = styled(Typography)<{
   $fontSize: `${number}px`;
   $lineHeight: `${number}px`;
@@ -787,4 +776,11 @@ export const RFIWatchersContentDiv = styled.div`
   align-items: center;
   background: rgba(255, 255, 255, 0.75);
   margin-right: 22px;
+`;
+export const StyledRFIListScroller = styled.div`
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;

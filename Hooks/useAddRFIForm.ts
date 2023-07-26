@@ -28,6 +28,8 @@ interface AddRFIForm {
   handleClickAddBtn: () => void;
   isAddingRFI: boolean;
   handleWatcherListChange: (value: Contact[]) => void;
+  handleIssueTitleChange: (value: string) => void;
+  handleIssueDescriptionChange: (value: string) => void;
 }
 export const useAddRFIForm = ({ setOpenForm }: Props): AddRFIForm => {
   const { edittedDocket } = useEditDocketSideScreenStore(
@@ -138,6 +140,19 @@ export const useAddRFIForm = ({ setOpenForm }: Props): AddRFIForm => {
       value: "",
     });
   };
+
+  const handleIssueTitleChange = (value: string) => {
+    handleUpdateNewRFI({
+      key: "issueTitle",
+      value: value,
+    });
+  };
+  const handleIssueDescriptionChange = (value: string) => {
+    handleUpdateNewRFI({
+      key: "issueQuestion",
+      value: value,
+    });
+  };
   //*** SEND RFI EMAIL Query *** */
   const sendEmailRFIQuery = RFIQueryAPI.useSendRFIEmailQuery({
     company,
@@ -182,5 +197,7 @@ export const useAddRFIForm = ({ setOpenForm }: Props): AddRFIForm => {
     handleClickAddBtn,
     isAddingRFI: addRFIQuery.isLoading,
     handleWatcherListChange,
+    handleIssueTitleChange,
+    handleIssueDescriptionChange,
   };
 };

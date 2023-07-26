@@ -30,6 +30,7 @@ import AddItemLoadingScreen from "../../Utilities/Lottie/AddItemLoadingScreen";
 import { Contact } from "../../Models/addressBook";
 import DoxleContactAutocompleteMultiple from "../../DoxleDesignPattern/DoxleAutoComplete/DoxleContactAutocompleteMultiple";
 import RFIDatePicker from "./RFICommonContent/RFIDatePicker";
+import DoxleTextField from "../../DoxleDesignPattern/DoxleTextField/DoxleTextField";
 
 type Props = {
   openForm: boolean;
@@ -55,6 +56,8 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
     handleClickAddBtn,
     isAddingRFI,
     handleWatcherListChange,
+    handleIssueTitleChange,
+    handleIssueDescriptionChange,
   } = useAddRFIForm({
     setOpenForm,
   });
@@ -143,28 +146,10 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
               $doxleFont={doxleFont}
             >
               <FormControl sx={{ width: "100%" }}>
-                <StyledAddRFITextField
-                  variant="standard"
-                  $themeColor={doxleThemeColor}
-                  $doxleFont={doxleFont}
-                  label="Issue Title"
+                <DoxleTextField
+                  labelText="Issue Title"
                   multiline
-                  inputRef={issueTitleInputRef}
-                  onChange={(
-                    event: React.ChangeEvent<
-                      HTMLInputElement | HTMLTextAreaElement
-                    >
-                  ) => {
-                    if (issueTitleInputRef.current)
-                      issueTitleInputRef.current.value = event.target.value;
-                  }}
-                  onBlur={() => {
-                    if (issueTitleInputRef.current)
-                      handleUpdateNewRFI({
-                        key: "issueTitle",
-                        value: issueTitleInputRef.current.value,
-                      });
-                  }}
+                  setValue={handleIssueTitleChange}
                 />
                 <AnimatePresence>
                   {!newRFI.issueTitle && (
@@ -187,7 +172,12 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
               $doxleFont={doxleFont}
             >
               <FormControl sx={{ width: "100%" }}>
-                <StyledAddRFITextField
+                <DoxleTextField
+                  labelText="Issue Description"
+                  multiline
+                  setValue={handleIssueDescriptionChange}
+                />
+                {/* <StyledAddRFITextField
                   variant="standard"
                   $themeColor={doxleThemeColor}
                   $doxleFont={doxleFont}
@@ -210,7 +200,7 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
                         value: issueDescriptionInputRef.current.value,
                       });
                   }}
-                />
+                /> */}
                 <AnimatePresence>
                   {!newRFI.issueQuestion && (
                     <StyledErrorHelperText
@@ -233,11 +223,8 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
               $doxleFont={doxleFont}
             >
               <StyledRFIAuthorFieldView>
-                <StyledAddRFITextField
-                  $themeColor={doxleThemeColor}
-                  $doxleFont={doxleFont}
-                  variant="standard"
-                  label="From"
+                <DoxleTextField
+                  labelText="From"
                   value={`${user?.firstName} ${user?.lastName}`}
                   contentEditable={false}
                 />
@@ -247,7 +234,6 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
                 autocompleteWrapperStyle={{
                   width: "40%",
                   height: "100%",
-                  marginTop: "8px",
                 }}
                 currentValue={toContactUser}
                 setNewContact={handleToContactAutocompleteChange}
@@ -272,7 +258,16 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
               />
 
               <FormControl style={{ width: "40%" }}>
-                <StyledAddRFITextField
+                <DoxleTextField
+                  labelText="Ball In Court"
+                  valueText={
+                    ballInCourtUser
+                      ? `${ballInCourtUser.firstName} ${ballInCourtUser.lastName}`
+                      : ""
+                  }
+                  contentEditable={false}
+                />
+                {/* <StyledAddRFITextField
                   $themeColor={doxleThemeColor}
                   $doxleFont={doxleFont}
                   sx={{ color: doxleThemeColor.doxleColor }}
@@ -284,7 +279,7 @@ const AddRFIForm = ({ openForm, setOpenForm }: Props) => {
                       : ""
                   }
                   contentEditable={false}
-                />
+                /> */}
               </FormControl>
             </StyledRFIFormFieldView>
 

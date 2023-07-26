@@ -1,7 +1,9 @@
 import React from "react";
 import {
   StyledAddRFIIconButton,
+  StyledRFIDetailSection,
   StyledRFIListContainer,
+  StyledRFIListScroller,
   StyledRFIListTopMenuSection,
 } from "./StyledComponentRFI";
 
@@ -10,13 +12,14 @@ import { Virtuoso } from "react-virtuoso";
 import RFIListItem from "./RFIListItem";
 import { AnimatePresence } from "framer-motion";
 import NoteAddOutlinedIcon from "@mui/icons-material/NoteAddOutlined";
-// import AddRFIForm from "./AddRFIForm";
+import AddRFIForm from "./AddRFIForm";
 
 import { useRFIList } from "../Hooks/useRFIList";
 import DoxleEmptyPlaceHolder from "../../DoxleDesignPattern/DoxleEmptyPlaceHolder/DoxleEmptyPlaceHolder";
 import { useDoxleThemeStore } from "../../DoxleGeneralStore/useDoxleThemeStore";
 import DoxleListSkeleton from "../../DoxleDesignPattern/DoxleSkeleton/DoxleListSkeleton";
 import RFIEmptyScreen from "./RFIEmptyScreen";
+import RFIDetail from "./RFIDetail/RFIDetail";
 
 type Props = {};
 
@@ -59,7 +62,22 @@ const RFIList = ({}: Props) => {
   return (
     <>
       {isFetchingRFIList && (
-        <DoxleListSkeleton numOfRows={14} skeletonType="rfiRow" />
+        <div
+          style={{
+            flex: 1,
+            width: "100%",
+            display: "flex",
+            marginTop: 14,
+            marginBottom: 14,
+          }}
+        >
+          <DoxleListSkeleton
+            numOfRows={14}
+            skeletonType="rfiRow"
+            containerWidthInRatio="100%"
+            containerHeightInRatio="100%"
+          />
+        </div>
       )}
 
       {isErrorFetchingRFIList && (
@@ -93,6 +111,18 @@ const RFIList = ({}: Props) => {
                   marginTop: 20,
                 }}
                 data={rfiList}
+                components={{
+                  Scroller: React.forwardRef((props, ref) => (
+                    <StyledRFIListScroller
+                      style={{
+                        ...props.style,
+                        overflow: "visible",
+                      }}
+                      ref={ref}
+                      {...props}
+                    />
+                  )),
+                }}
                 itemContent={(index, item) => (
                   <AnimatePresence key={`${item.rfiPk}`}>
                     <RFIListItem
@@ -103,7 +133,7 @@ const RFIList = ({}: Props) => {
                 )}
               />
 
-              {/* <AnimatePresence>
+              <AnimatePresence>
                 {selectedRFI && (
                   <StyledRFIDetailSection
                     variants={rfiDetailSectionVariants}
@@ -119,16 +149,16 @@ const RFIList = ({}: Props) => {
                     />
                   </StyledRFIDetailSection>
                 )}
-              </AnimatePresence> */}
+              </AnimatePresence>
             </StyledRFIListContainer>
           ) : (
             <RFIEmptyScreen />
           )}
 
-          {/* <AddRFIForm
+          <AddRFIForm
             setOpenForm={setShowAddRFIForm}
             openForm={showAddRFIForm}
-          /> */}
+          />
         </>
       )}
     </>

@@ -2,13 +2,11 @@ import { DatePickerProps, LocalizationProvider } from "@mui/x-date-pickers";
 import React from "react";
 import { useDoxleThemeStore } from "../../../DoxleGeneralStore/useDoxleThemeStore";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  StyledAddRFITextField,
-  StyledRFIFormDatePickerView,
-} from "../StyledComponentRFI";
+import { StyledRFIFormDatePickerView } from "../StyledComponentRFI";
 
 import EventIcon from "@mui/icons-material/Event";
 import { TextFieldProps } from "@mui/material";
+import DoxleTextField from "../../../DoxleDesignPattern/DoxleTextField/DoxleTextField";
 type Props = {};
 
 const RFIDatePicker = React.forwardRef(
@@ -30,12 +28,17 @@ const RFIDatePicker = React.forwardRef(
           }}
           slots={{
             textField: (params: TextFieldProps) => (
-              <StyledAddRFITextField
+              // <StyledAddRFITextField
+              //   {...params}
+              //   $themeColor={doxleThemeColor}
+              //   $doxleFont={doxleFont}
+              //   variant="standard"
+              //   label="Issue Date"
+              // />
+              <DoxleTextField
                 {...params}
-                $themeColor={doxleThemeColor}
-                $doxleFont={doxleFont}
-                variant="standard"
-                label="Issue Date"
+                labelText="Issue Date"
+                contentEditable={false}
               />
             ),
             // desktopPaper: (params) => (
