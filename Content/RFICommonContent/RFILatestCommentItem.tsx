@@ -20,13 +20,6 @@ const RFILatestCommentItem = (props: {
     doxleThemeColor: state.doxleThemeColor,
     doxleFont: state.doxleFont,
   }));
-  const { contactList } = useRFIStore(
-    (state) => ({
-      contactList: state.contactList,
-    }),
-    shallow
-  );
-  console.log("DISCUSSION ITEM:", discussionItem);
   const matchUser: User | undefined = discussionItem
     ? discussionItem.authorJson ?? undefined
     : undefined;

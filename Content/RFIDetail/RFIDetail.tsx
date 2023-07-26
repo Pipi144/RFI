@@ -46,6 +46,7 @@ const RFIDetail = ({
   companyDetail,
   extractedRfiLinkId,
 }: Props) => {
+  console.log("RFI ITEM:", rfiItem);
   const { doxleThemeColor, doxleFont } = useDoxleThemeStore((state) => ({
     doxleThemeColor: state.doxleThemeColor,
     doxleFont: state.doxleFont,
@@ -203,7 +204,10 @@ const RFIDetail = ({
         dialogButtons={[
           {
             buttonText: "Delete",
-            buttonFunction: () => deleteRFIMutateFunction(rfiItem.rfiId),
+            buttonFunction: () => {
+              setShowConfirmDelete(false);
+              deleteRFIMutateFunction(rfiItem.rfiPk);
+            },
           },
           {
             buttonText: "Cancel",

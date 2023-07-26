@@ -34,6 +34,7 @@ const RFIWatcherTag = React.memo((props: { watcher: Contact }) => {
       variants={watcherTagAnimatedVariants}
       initial={false}
       animate="entering"
+      layout
     >
       {watcher.firstName} {watcher.lastName}
     </StyledRFIWatcherTag>

@@ -58,7 +58,7 @@ const RFIListItem = ({ rfiItem, handleClickRFIItem }: Props) => {
         rgbaColor: doxleThemeColor.primaryContainerColor as TRgbaFormat,
         alpha: "0.4",
       }),
-      boxShadow: `0px 0px 1px 4px ${doxleThemeColor.primaryBoxShadowColor} `,
+      boxShadow: `0px 0px 8px 1px ${doxleThemeColor.primaryBoxShadowColor} `,
       transition: {
         duration: 0.2,
       },

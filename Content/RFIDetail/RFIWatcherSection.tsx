@@ -110,15 +110,17 @@ const RFIWatcherSection = ({
       </StyledRFIDetailLabelText>
 
       <StyledRFIWatcherList>
-        <LayoutGroup id={`rfiWatcherLayout#${edittedRFI.rfiPk}`}>
-          {watcherList.length > 0 &&
-            watcherList.map((watcher, index) => (
-              <RFIWatcherTag
-                watcher={watcher}
-                key={`watcher#${watcher.contactId}`}
-              />
-            ))}
-        </LayoutGroup>
+        <AnimatePresence mode="popLayout">
+          <LayoutGroup id={`rfiWatcherLayout#${edittedRFI.rfiPk}`}>
+            {watcherList.length > 0 &&
+              watcherList.map((watcher, index) => (
+                <RFIWatcherTag
+                  watcher={watcher}
+                  key={`watcher#${watcher.contactId}`}
+                />
+              ))}
+          </LayoutGroup>
+        </AnimatePresence>
       </StyledRFIWatcherList>
 
       {fullControl && (

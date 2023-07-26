@@ -1,6 +1,4 @@
 import { useCallback, useState } from "react";
-import { useRFIStore } from "../Store/useRFIStore";
-import { shallow } from "zustand/shallow";
 import { Contact } from "../../Models/addressBook";
 import { RFI } from "../Models/rfi";
 type Props = {
@@ -52,11 +50,19 @@ export const useRFIWatcherSection = ({
             (watcherId) => watcherId !== contactItem.contactId
           ),
         ],
+        watchersJson: prev.watchersJson
+          ? prev.watchersJson.filter(
+              (watcherItem) => watcherItem.contactId !== contactItem.contactId
+            )
+          : [],
       }));
     } else
       setEdittedRFI((prev) => ({
         ...prev,
         watchers: [...edittedRFI.watchers, contactItem.contactId],
+        watchersJson: prev.watchersJson
+          ? [...prev.watchersJson, contactItem]
+          : [contactItem],
       }));
   };
 

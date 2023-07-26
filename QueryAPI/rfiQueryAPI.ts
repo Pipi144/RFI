@@ -148,9 +148,20 @@ const useDeleteRFIQuery = ({
         deletedRfiId: variables,
       });
     },
-    onError: (error, variables, context) => {
-      if (showNotification)
-        showNotification("SOMETHING WRONG!", "error", "Fail To Add IMAGES");
+    onError: (error: any, variables, context) => {
+      console.log("ERROR:", error);
+      if (showNotification) {
+        {
+          if (error.response.status === 403)
+            showNotification(
+              "You are not authorised for this action!",
+              "error",
+              ""
+            );
+          else
+            showNotification("SOMETHING WRONG!", "error", "Fail To Add IMAGES");
+        }
+      }
     },
   });
   const mutate = (rfiId: string) => mutation.mutate(rfiId);
