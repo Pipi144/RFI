@@ -25,12 +25,13 @@ export const StyledRFIRootContainer = styled(motion.div)<{
   $themeColor: DoxleThemeColor;
 }>`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 4px);
   background-color: ${(p) => p.$themeColor.primaryBackgroundColor};
   display: flex;
   justify-content: center;
   position: relative;
   flex-direction: row;
+  margin-top: 4px;
 `;
 
 export const StyledRFILogoSection = styled.div``;

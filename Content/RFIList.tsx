@@ -20,7 +20,11 @@ import { useDoxleThemeStore } from "../../DoxleGeneralStore/useDoxleThemeStore";
 import DoxleListSkeleton from "../../DoxleDesignPattern/DoxleSkeleton/DoxleListSkeleton";
 import RFIEmptyScreen from "./RFIEmptyScreen";
 import RFIDetail from "./RFIDetail/RFIDetail";
-
+import ViewQuiltSharpIcon from "@mui/icons-material/ViewQuiltSharp";
+import DoxleIconButton from "../../DoxleDesignPattern/DoxleButtons/DoxleIconButton";
+import TableRowsSharpIcon from "@mui/icons-material/TableRowsSharp";
+import RFIListTableView from "./RFIListTableView";
+import DoxleGridLayout from "../../DoxleDesignPattern/DoxleLayout/DoxleGridLayout/DoxleGridLayout";
 type Props = {};
 
 const RFIList = ({}: Props) => {
@@ -40,6 +44,8 @@ const RFIList = ({}: Props) => {
     selectedRFI,
     handleCloseRFIDetailScreen,
     setSelectedRFI,
+    handleSelectRFIView,
+    rfiListView,
   } = useRFIList();
 
   //*Animation
@@ -93,6 +99,37 @@ const RFIList = ({}: Props) => {
           {rfiList.length > 0 ? (
             <StyledRFIListContainer>
               <StyledRFIListTopMenuSection>
+                <DoxleIconButton
+                  iconSource={
+                    <TableRowsSharpIcon
+                      htmlColor={doxleThemeColor.primaryFontColor}
+                      sx={{ fontSize: 20 }}
+                    />
+                  }
+                  buttonSize={30}
+                  bgColor={doxleThemeColor.primaryContainerColor}
+                  buttonWrapperStyle={{
+                    marginRight: 4,
+                    border: `1px solid ${doxleThemeColor.doxleColor}`,
+                  }}
+                  onClick={() => handleSelectRFIView("table")}
+                />
+                <DoxleIconButton
+                  iconSource={
+                    <ViewQuiltSharpIcon
+                      htmlColor={doxleThemeColor.primaryFontColor}
+                      sx={{ fontSize: 20 }}
+                    />
+                  }
+                  buttonSize={30}
+                  bgColor={doxleThemeColor.primaryContainerColor}
+                  buttonWrapperStyle={{
+                    marginRight: 8,
+                    border: `1px solid ${doxleThemeColor.doxleColor}`,
+                  }}
+                  onClick={() => handleSelectRFIView("grid")}
+                />
+
                 <StyledAddRFIIconButton
                   $themeColor={doxleThemeColor}
                   $doxleFont={doxleFont}
@@ -104,34 +141,15 @@ const RFIList = ({}: Props) => {
                   Add RFI
                 </StyledAddRFIIconButton>
               </StyledRFIListTopMenuSection>
-              <Virtuoso
-                style={{
-                  width: "100%",
-                  flex: 1,
-                  marginTop: 20,
-                }}
-                data={rfiList}
-                components={{
-                  Scroller: React.forwardRef((props, ref) => (
-                    <StyledRFIListScroller
-                      style={{
-                        ...props.style,
-                        overflow: "visible",
-                      }}
-                      ref={ref}
-                      {...props}
-                    />
-                  )),
-                }}
-                itemContent={(index, item) => (
-                  <AnimatePresence key={`${item.rfiPk}`}>
-                    <RFIListItem
-                      rfiItem={item}
-                      handleClickRFIItem={handleClickRFIItem}
-                    />
-                  </AnimatePresence>
-                )}
-              />
+
+              {rfiListView === "table" ? (
+                <RFIListTableView
+                  rfiList={rfiList}
+                  handleClickRFIItem={handleClickRFIItem}
+                />
+              ) : (
+                <DoxleGridLayout data={rfiList} />
+              )}
 
               <AnimatePresence>
                 {selectedRFI && (

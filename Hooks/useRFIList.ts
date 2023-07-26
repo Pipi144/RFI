@@ -7,6 +7,7 @@ import { useRFIStore } from "../Store/useRFIStore";
 import { shallow } from "zustand/shallow";
 import RFIQueryAPI from "../QueryAPI/rfiQueryAPI";
 
+type RFIListView = "table" | "grid";
 interface RFIList {
   isFetchingRFIList: boolean;
   isErrorFetchingRFIList: boolean;
@@ -19,10 +20,13 @@ interface RFIList {
   selectedRFI: RFI | undefined;
   handleCloseRFIDetailScreen: () => void;
   setSelectedRFI: React.Dispatch<React.SetStateAction<RFI | undefined>>;
+  handleSelectRFIView: (view: RFIListView) => void;
+  rfiListView: RFIListView;
 }
 export const useRFIList = (): RFIList => {
   const [showAddRFIForm, setShowAddRFIForm] = useState<boolean>(false);
   const [selectedRFI, setSelectedRFI] = useState<RFI | undefined>(undefined);
+  const [rfiListView, setRfiListView] = useState<RFIListView>("table");
   const { accessToken } = useDoxleAuthStore((state) => ({
     accessToken: state.accessToken,
   }));
@@ -56,7 +60,9 @@ export const useRFIList = (): RFIList => {
   );
 
   //############### END OF FETCHING RFIS ###################
-
+  const handleSelectRFIView = (view: RFIListView) => {
+    setRfiListView(view);
+  };
   const handleClickAddRFIBtn = () => {
     setShowAddRFIForm(true);
   };
@@ -81,5 +87,7 @@ export const useRFIList = (): RFIList => {
     selectedRFI,
     handleCloseRFIDetailScreen,
     setSelectedRFI,
+    handleSelectRFIView,
+    rfiListView,
   };
 };
