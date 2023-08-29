@@ -166,7 +166,7 @@ export const StyledRFIQuestionContentView = styled.div<{
   font-size: 16px;
   line-height: 19px;
   letter-spacing: 0.05em;
-
+  word-break: break-word;
   color: ${(p) => p.$themeColor.primaryFontColor};
   min-height: 70px;
   text-transform: none;

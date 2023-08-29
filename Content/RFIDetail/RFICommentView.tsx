@@ -92,6 +92,7 @@ const RFICommentView = ({
   );
 
   const commentListRef = useRef<VirtuosoHandle>(null);
+
   return (
     <StyledRFICommentViewContainer>
       {getDiscussionListQuery.isError && (
