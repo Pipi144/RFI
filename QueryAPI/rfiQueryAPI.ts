@@ -29,7 +29,7 @@ const useGetRFIList = ({
   filter,
 }: GetRFIListQueryProp) => {
   const qKey = formRFIQueryKey(company, filter);
-  let rfiURL = `https://${baseAddress}/rfi/?page=1`;
+  let rfiURL = `${baseAddress}/rfi/?page=1`;
   let filterParam: any = {};
   if (company) {
     filterParam.company = company.companyId;
@@ -81,7 +81,7 @@ const useAddRFIList = ({
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (newRFI: NewRFI) => {
-      return axios.post(`https://${baseAddress}/rfi/`, newRFI, {
+      return axios.post(`${baseAddress}/rfi/`, newRFI, {
         headers: {
           Authorization: "Bearer " + accessToken,
           "User-Company": company?.companyId || "",
@@ -126,7 +126,7 @@ const useDeleteRFIQuery = ({
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (rfiId: string) => {
-      return axios.delete(`https://${baseAddress}/rfi/${rfiId}/`, {
+      return axios.delete(`${baseAddress}/rfi/${rfiId}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
           "User-Company": company?.companyId || "",
@@ -193,7 +193,7 @@ const useUpdateRFIQuery = ({
       const { rfiItem, updateBody } = props;
       console.log("UPDATE BODY:", updateBody);
       return axios.patch(
-        `https://${baseAddress}/rfi/${rfiItem.rfiPk}/`,
+        `${baseAddress}/rfi/${rfiItem.rfiPk}/`,
         updateBody,
         {
           headers: {
@@ -283,7 +283,7 @@ const useSendRFIEmailQuery = ({
   const mutation = useMutation({
     mutationFn: async (rfiId: string) => {
       return axios.post(
-        `https://${baseAddress}/rfi/sendemail/`,
+        `${baseAddress}/rfi/sendemail/`,
         { rfiId: rfiId },
         {
           headers: {
@@ -320,7 +320,7 @@ const useNotifyBallInCourtQuery = ({
   const mutation = useMutation({
     mutationFn: async (rfiId: string) => {
       return axios.post(
-        `https://${baseAddress}/rfi/notify_ball_in_court/`,
+        `${baseAddress}/rfi/notify_ball_in_court/`,
         { rfiId: rfiId },
         {
           headers: {
