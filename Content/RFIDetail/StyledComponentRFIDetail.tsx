@@ -99,21 +99,29 @@ export const StyledUserListItem = styled(motion.div)<{
   text-transform: capitalize;
   padding: 0px 8px;
   align-items: center;
-  display: flex;
 
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
   border-bottom: 1px solid ${(p) => p.$themeColor.primaryDividerColor};
 `;
 export const StyledUserDropdownListContainer = styled(motion.div)<{
   $themeColor: DoxleThemeColor;
 }>`
-  height: 300px;
+  height: calc(30vh - 28px);
   background-color: ${(p) => p.$themeColor.primaryContainerColor};
   box-shadow: 1px 4px 4px ${(p) => p.$themeColor.primaryBoxShadowColor};
-  width: 200px;
+  width: 8vw;
   border-radius: 8px;
   position: absolute;
-  left: calc(50% - 100px);
-  bottom: -310px;
+  left: calc(50% - 4vw);
+  bottom: calc(-30vh - 10px);
+  padding: 14px 0px;
+  min-width: 180px;
+  min-height: 200px;
+  overflow: hidden;
 `;
 
 export const StyledRFIDetailContentRow = styled.div`
@@ -514,4 +522,49 @@ export const StyledRFIWacherSectionContainer = styled.div`
   align-items: center;
   margin: 14px 0px;
   z-index: 4;
+`;
+export const StyledContactListScroller = styled.div`
+  flex-grow: 1;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+export const StyledSearchContactTextField = styled(TextField)<{
+  $themeColor: DoxleThemeColor;
+  $doxleFont: DoxleFont;
+}>`
+  && {
+    width: 100%;
+    height: 30px;
+    &:before {
+      border-bottom: none;
+    }
+  }
+  input {
+    font-family: ${(p) => p.$doxleFont.primaryFont};
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: normal;
+    letter-spacing: 0.0075em;
+
+    color: ${(p) => p.$themeColor.primaryFontColor};
+    padding-left: 8px;
+  }
+  & .MuiInput-root:after {
+    border-bottom: none;
+  }
+  & .MuiInput-root {
+    border-bottom: none;
+  }
+  & .MuiInput-root:hover {
+    border-bottom: none;
+  }
+  & .MuiInput-root:before {
+    border-bottom: none;
+  }
+  & .MuiInput-root:focus {
+    border-bottom: none;
+  }
 `;
