@@ -46,7 +46,6 @@ const RFIDetail = ({
   companyDetail,
   extractedRfiLinkId,
 }: Props) => {
-  console.log("RFI ITEM:", rfiItem);
   const { doxleThemeColor, doxleFont } = useDoxleThemeStore((state) => ({
     doxleThemeColor: state.doxleThemeColor,
     doxleFont: state.doxleFont,
@@ -159,12 +158,14 @@ const RFIDetail = ({
             value={formatDate(edittedRFI.issueDate as string, "dd.MM.yyyy")}
           />
 
-          <RFIBallInCourtField
-            ballInCourtUser={ballInCourtUser}
-            setEdittedRFI={setEdittedRFI}
-            fullControl={fullControl}
-            partyInfo={partyInfo}
-          />
+          {
+            <RFIBallInCourtField
+              ballInCourtUser={ballInCourtUser}
+              setEdittedRFI={setEdittedRFI}
+              fullControl={fullControl}
+              partyInfo={partyInfo}
+            />
+          }
         </StyledRFIDetailContentRow>
 
         <StyledRFIDetailContentRow

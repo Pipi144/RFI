@@ -192,16 +192,12 @@ const useUpdateRFIQuery = ({
     }) => {
       const { rfiItem, updateBody } = props;
       console.log("UPDATE BODY:", updateBody);
-      return axios.patch(
-        `${baseAddress}/rfi/${rfiItem.rfiPk}/`,
-        updateBody,
-        {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-            "User-Company": company?.companyId || "",
-          },
-        }
-      );
+      return axios.patch(`${baseAddress}/rfi/${rfiItem.rfiPk}/`, updateBody, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "User-Company": company?.companyId || "",
+        },
+      });
     },
     onSuccess: (result, variables, context) => {
       console.log("SUCESS EDIT:", result.data);
@@ -255,7 +251,7 @@ const useGetRFILinkDetailQuery = ({
   showNotification,
 }: GetRFILinkDetailQueryProps) => {
   const qKey = formRFILinkQueryKey(rfiLinkId);
-  let url = baseAddress + "/rfi/link/" + rfiLinkId + "/";
+  let url = "" + baseAddress + "/rfi/link/" + rfiLinkId + "/";
   return useQuery(qKey, () => axios.get(url), {
     enabled: Boolean(rfiLinkId),
     retry: 1,
@@ -279,7 +275,6 @@ const useSendRFIEmailQuery = ({
   accessToken,
   company,
 }: SendRFIEmailQueryProps) => {
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (rfiId: string) => {
       return axios.post(

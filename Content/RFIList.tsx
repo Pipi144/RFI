@@ -149,10 +149,26 @@ const RFIList = ({}: Props) => {
                   handleClickRFIItem={handleClickRFIItem}
                 />
               ) : (
-                <DoxleGridLayout
-                  data={rfiList}
-                  renderItem={(item, index) => <RFIGridItem rfiItem={item} />}
-                />
+                <div
+                  style={{
+                    width: "100%",
+                    flex: 1,
+                    display: "flex",
+                    marginTop: 14,
+                  }}
+                >
+                  <DoxleGridLayout
+                    data={rfiList}
+                    renderItem={(item, index) => (
+                      <RFIGridItem
+                        rfiItem={item}
+                        handleClickRFIItem={handleClickRFIItem}
+                      />
+                    )}
+                    extractItemKeyProp="rfiPk"
+                    containerStyle={{}}
+                  />
+                </div>
               )}
 
               <AnimatePresence>

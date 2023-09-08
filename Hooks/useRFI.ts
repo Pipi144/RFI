@@ -6,7 +6,7 @@ import useDoxleNotificationStore from "../../DoxleGeneralStore/useDoxleNotificat
 import ContactsAPI, {
   FilterRetrieveContactQuery,
 } from "../../Services/QueryHooks/contactsAPI";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import UserQueryAPI from "../../Services/QueryHooks/userQueryAPI";
 import { User } from "../../Models/user";
 import { useRFIStore } from "../Store/useRFIStore";
@@ -14,6 +14,8 @@ import { Contact } from "../../Models/addressBook";
 
 interface RFI {}
 export const useRFI = (): RFI => {
+  const [searchAssigneeText, setSearchAssigneeText] = useState<string>("");
+
   const { accessToken } = useDoxleAuthStore((state) => ({
     accessToken: state.accessToken,
   }));
@@ -61,7 +63,7 @@ export const useRFI = (): RFI => {
   //#FETCHING CONTACTS
   const filterRetrieveContactQuery: FilterRetrieveContactQuery = useMemo(
     () => ({
-      searchInput: "",
+      searchInput: searchAssigneeText,
     }),
     []
   );

@@ -1,12 +1,20 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { User } from "../../../Models/user";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import {
   StyledAssignWatcherIconButton,
+  StyledContactListScroller,
   StyledRFIWacherSectionContainer,
   StyledRFIWatcherList,
   StyledRFIWatcherTag,
+  StyledSearchContactTextField,
   StyledUserDropdownListContainer,
   StyledUserListItem,
 } from "./StyledComponentRFIDetail";
@@ -26,6 +34,10 @@ import {
 } from "../../../Utilities/FunctionUtilities";
 import { useRFIWatcherSection } from "../../Hooks/useRFIWatcherSection";
 import { shallow } from "zustand/shallow";
+import DoxleEmptyPlaceHolder from "../../../DoxleDesignPattern/DoxleEmptyPlaceHolder/DoxleEmptyPlaceHolder";
+import DoxleTextField from "../../../DoxleDesignPattern/DoxleTextField/DoxleTextField";
+import ListLoadingMore from "../../../Utilities/Lottie/ListLoadingMore";
+import DoxleListSkeleton from "../../../DoxleDesignPattern/DoxleSkeleton/DoxleListSkeleton";
 
 type Props = {
   edittedRFI: RFI;
@@ -51,18 +63,27 @@ const RFIWatcherSection = ({
     handleCloseUserList,
     isUserSelected,
     handleClickUserItem,
+    contactList,
+    isFetchingContactList,
+    isSuccessFetchingContactList,
+    isErrorFetchingContactList,
+    handleSearchAssigneeTextChange,
+    hasNextPageContact,
+    handleFetchNextPage,
+    assigneeSearchText,
+    isFetchingNextPage,
   } = useRFIWatcherSection({
     edittedRFI,
     setEdittedRFI,
     fullControl,
     watcherList,
   });
-  const { contactList } = useRFIStore(
-    (state) => ({
-      contactList: state.contactList,
-    }),
-    shallow
-  );
+  const searchAssignTextfieldRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (searchAssignTextfieldRef.current)
+      searchAssignTextfieldRef.current.focus();
+  }, [showUserListDropdown]);
+
   //*Animation
   const userListItemVariants = {
     initial: {
@@ -149,31 +170,106 @@ const RFIWatcherSection = ({
                   animate="entering"
                   exit="exiting"
                 >
-                  <Virtuoso
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      borderRadius: 8,
-                    }}
-                    data={contactList}
-                    itemContent={(index, item) => (
-                      <StyledUserListItem
-                        $themeColor={doxleThemeColor}
-                        $doxleFont={doxleFont}
-                        key={`userItem#${item.contactId}`}
-                        variants={userListItemVariants}
-                        initial="initial"
-                        animate={isUserSelected(item) ? "selected" : "initial"}
-                        whileHover="hovering"
-                        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-                          event.stopPropagation();
-                          handleClickUserItem(item);
-                        }}
-                      >
-                        {item.firstName} {item.lastName}
-                      </StyledUserListItem>
-                    )}
+                  <StyledSearchContactTextField
+                    $themeColor={doxleThemeColor}
+                    $doxleFont={doxleFont}
+                    variant="standard"
+                    placeholder="Search Contact..."
+                    value={assigneeSearchText}
+                    onChange={handleSearchAssigneeTextChange}
+                    inputRef={searchAssignTextfieldRef}
                   />
+                  {isSuccessFetchingContactList && (
+                    <Virtuoso
+                      style={{
+                        flex: 1,
+                        width: "100%",
+                        paddingBottom: 20,
+                      }}
+                      data={contactList}
+                      components={{
+                        EmptyPlaceholder: React.forwardRef((props, ref) => (
+                          <DoxleEmptyPlaceHolder
+                            {...props}
+                            headTitleText="No Contacts"
+                            subTitleText=""
+                            containerHeightRatio="100%"
+                            containerWidthRatio="100%"
+                            headTitleTextStyle={{ fontSize: "2.8rem" }}
+                          />
+                        )),
+                        Scroller: React.forwardRef((props, ref) => (
+                          <StyledContactListScroller
+                            style={{
+                              ...props.style,
+                              overflow: "visible",
+                            }}
+                            ref={ref}
+                            {...props}
+                          />
+                        )),
+                      }}
+                      itemContent={(index, item) => (
+                        <StyledUserListItem
+                          $themeColor={doxleThemeColor}
+                          $doxleFont={doxleFont}
+                          key={`userItem#${item.contactId}`}
+                          variants={userListItemVariants}
+                          initial="initial"
+                          animate={
+                            isUserSelected(item) ? "selected" : "initial"
+                          }
+                          whileHover="hovering"
+                          onClick={(
+                            event: React.MouseEvent<HTMLDivElement>
+                          ) => {
+                            event.stopPropagation();
+                            handleClickUserItem(item);
+                          }}
+                        >
+                          {item.firstName} {item.lastName}
+                        </StyledUserListItem>
+                      )}
+                      endReached={() => {
+                        if (hasNextPageContact) {
+                          handleFetchNextPage();
+                        }
+                      }}
+                      atBottomThreshold={0.01}
+                    />
+                  )}
+                  {isErrorFetchingContactList && (
+                    <DoxleEmptyPlaceHolder
+                      containerStyle={{ flex: 1 }}
+                      headTitleText="Something Wrong!"
+                      headTitleTextStyle={{ fontSize: "2.8rem" }}
+                    />
+                  )}
+
+                  {isFetchingNextPage && (
+                    <ListLoadingMore
+                      containerStyle={{
+                        position: "absolute",
+                        bottom: 0,
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        zIndex: 5,
+                      }}
+                      animationSize={60}
+                    />
+                  )}
+
+                  {isFetchingContactList && (
+                    <DoxleListSkeleton
+                      skeletonType="comment"
+                      containerStyle={{
+                        flex: 1,
+                        width: "calc(100% - 16px)",
+                        padding: "4px 8px",
+                      }}
+                    />
+                  )}
                 </StyledUserDropdownListContainer>
               </ClickAwayListener>
             )}

@@ -50,6 +50,7 @@ export const StyledRFIMainContentSection = styled.div<{
   $paddingRight: `${number}px`;
 }>`
   flex: 1;
+
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -169,7 +170,7 @@ export const StyledRFIFormContentSection = styled.div`
   padding: 14px;
   justify-content: flex-start;
   align-items: center;
-  overflow-y: scroll;
+  overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -785,10 +786,51 @@ export const StyledRFIListScroller = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
-export const StyledRFIGridItem = styled.div`
+export const StyledRFIGridItem = styled(motion.div)<{
+  $themeColor: DoxleThemeColor;
+}>`
   width: calc(100% - 16px);
   padding: 8px;
   display: flex;
   flex-direction: column;
-  background-color: pink;
+
+  border-radius: 14px;
+  background-color: ${(p) => p.$themeColor.primaryContainerColor};
+  box-shadow: 0px 0px 2px 1px ${(p) => p.$themeColor.primaryBoxShadowColor};
+  cursor: pointer;
+`;
+
+export const StyledRFIGridItemTitleSection = styled.div<{
+  $themeColor: DoxleThemeColor;
+  $doxleFont: DoxleFont;
+}>`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  span {
+    color: ${(p) => p.$themeColor.primaryFontColor};
+    font-family: ${(p) => p.$doxleFont.primaryFont};
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 700;
+    flex: 1;
+    word-break: break-word;
+    text-transform: capitalize;
+  }
+`;
+
+export const StyledRFIGridItemToContactDisplay = styled.span<{
+  $themeColor: DoxleThemeColor;
+  $doxleFont: DoxleFont;
+}>`
+  margin-top: 8px;
+  color: ${(p) => p.$themeColor.primaryInputPlaceholderColor};
+  font-family: ${(p) => p.$doxleFont.primaryFont};
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 700;
+  width: 100%;
+  word-break: break-word;
 `;
