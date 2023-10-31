@@ -3,14 +3,13 @@ import { useEditDocketSideScreenStore } from "../../CoreContent/EditDocketSideSc
 import { useDoxleAuthStore } from "../../DoxleGeneralStore/useDoxleAuthStore";
 import { useDoxleCurrentContextStore } from "../../DoxleGeneralStore/useDoxleCurrentContext";
 import useDoxleNotificationStore from "../../DoxleGeneralStore/useDoxleNotificationStore";
-import ContactsAPI, {
-  FilterRetrieveContactQuery,
-} from "../../Services/QueryHooks/contactsAPI";
+import ContactsAPI from "../../Services/QueryHooks/contactsAPI";
 import { useEffect, useMemo, useState } from "react";
 import UserQueryAPI from "../../Services/QueryHooks/userQueryAPI";
 import { User } from "../../Models/user";
 import { useRFIStore } from "../Store/useRFIStore";
 import { Contact } from "../../Models/addressBook";
+import {ContactsFilters} from "../../Services/QueryHooks/contactsFilters";
 
 interface RFI {}
 export const useRFI = (): RFI => {
@@ -61,9 +60,9 @@ export const useRFI = (): RFI => {
   });
 
   //#FETCHING CONTACTS
-  const filterRetrieveContactQuery: FilterRetrieveContactQuery = useMemo(
+  const filterRetrieveContactQuery: ContactsFilters = useMemo(
     () => ({
-      searchInput: searchAssigneeText,
+      search: searchAssigneeText,
     }),
     []
   );

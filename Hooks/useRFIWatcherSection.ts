@@ -1,11 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
 import { Contact } from "../../Models/addressBook";
 import { RFI } from "../Models/rfi";
-import ContactsAPI, {
-  FilterRetrieveContactQuery,
-} from "../../Services/QueryHooks/contactsAPI";
+import ContactsAPI from "../../Services/QueryHooks/contactsAPI";
 import { useDoxleAuthStore } from "../../DoxleGeneralStore/useDoxleAuthStore";
 import { useDoxleCurrentContextStore } from "../../DoxleGeneralStore/useDoxleCurrentContext";
+import {ContactsFilters} from "../../Services/QueryHooks/contactsFilters";
 type Props = {
   edittedRFI: RFI;
   setEdittedRFI: React.Dispatch<React.SetStateAction<RFI>>;
@@ -90,9 +89,9 @@ export const useRFIWatcherSection = ({
   ) => {
     setAssigneeSearchText(event.target.value);
   };
-  const filterRetrieveContactQuery: FilterRetrieveContactQuery = useMemo(
+  const filterRetrieveContactQuery: ContactsFilters = useMemo(
     () => ({
-      searchInput: assigneeSearchText,
+      search: assigneeSearchText,
     }),
     [assigneeSearchText]
   );
